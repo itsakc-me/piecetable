@@ -1,0 +1,67 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'io.itsakc.demo'
+    compileSdk 34
+    
+    defaultConfig {
+        applicationId "io.itsakc.demo"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.1-beta"
+        
+        vectorDrawables { 
+            useSupportLibrary true
+        }
+    }
+    
+    signingConfigs {
+        release {
+            storeFile file("../key-piecetable.keystore")
+            storePassword "itspass"
+            keyAlias "itskey"
+            keyPassword "itspass"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            debuggable true
+        }
+        
+        debug {
+            signingConfig signingConfigs.release
+            debuggable true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+    packagingOptions {
+        resources {
+            excludes += ['license/LICENSE.dom-documentation.txt', 'license/NOTICE', 'license/LICENSE.dom-software.txt', 'license/LICENSE']
+            pickFirsts += ['license/README.dom.txt']
+        }
+    }
+
+}
+
+dependencies {
+    implementation project(':piecetable')
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+}
